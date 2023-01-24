@@ -24,10 +24,12 @@ let options = {
   minuteIncrement: 1, // wybor czasu z dokladnoscia do 1 minuty (default jest na 5)
   onClose(selectedDates) {
     //wybieramy date po zamknieciu kalendarza
-    if (selectedDates[0] < actualDate) { // jesli wybrana data przez uzytkownika jest z przeszlosci w porownaniu z aktualna data
+    if (selectedDates[0] < actualDate) {
+      // jesli wybrana data przez uzytkownika jest z przeszlosci w porownaniu z aktualna data
       buttonStart.disabled = true; //to przycisk jest nieaktywny
       Notiflix.Notify.warning('Please choose a date in the future'); //i wyswietla sie ostrzezenie, aby wybrac date z przyszlosci
-    } else if (selectedDates[0] > actualDate) { //chyba, ze wybrana data jest z przyszlosci
+    } else if (selectedDates[0] > actualDate) {
+      //chyba, ze wybrana data jest z przyszlosci
       buttonStart.disabled = false; //to przycisk staje sie aktywny
       Notiflix.Notify.success('OK'); //i wyswietla sie komunikat o powodzeniu
       userDate = selectedDates[0].getTime(); //i pobieramy wybrana przez uzytkownika date i lokujemy ja w zmiennej userDate
@@ -35,12 +37,15 @@ let options = {
   },
 };
 
-const counterTime = () => { //odpalamy licznik czasu
+const counterTime = () => {
+  //odpalamy licznik czasu
   buttonStart.disabled = true; //przycisk jest nieaktywny bo juz mamy liczony czas
-  const counter = setInterval(() => { //wykonuje funkcje co 1s
+  const counter = setInterval(() => {
+    //wykonuje funkcje co 1s
     let gapTime = userDate - new Date().getTime(); //zmienna w ktorej jest roznica czasu miedzy wybranym czasem uzytkownika, a czasem aktualnym
     let gapTimeMs = convertMs(gapTime); //zamiana tej roznicy na ms
-    if (gapTime <= 0) { //jesli roznica jest mniejsza lub rowna zero
+    if (gapTime <= 0) {
+      //jesli roznica jest mniejsza lub rowna zero
       clearInterval(counter); //to konczymy wykonywanie funkcji/odliczanie czasu
     } else {
       time(gapTimeMs); //w przeciwnym razie nadal liczymy czas
@@ -72,11 +77,13 @@ function convertMs(ms) {
   // Remaining minutes
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
 
 function addLeadingZero(value) {
-  return value.toString().padStart(2, '0'); //padStart - pierwszy parametr - dlugosc stringa - 2 miejsca, a drugi okresla jakim tekstem beda wypelniane brakujace znaki. jak nie podamy drugiego parametru to bedzie spacja.
-};
+  return value.toString().padStart(2, '0'); //padStart  - pierwszy parametr - dlugosc stringa - 2 miejsca, a drugi okresla jakim tekstem beda wypelniane brakujace znaki. jak nie podamy drugiego parametru to bedzie spacja.
+}
