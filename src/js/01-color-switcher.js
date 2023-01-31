@@ -14,10 +14,12 @@ buttonStart.addEventListener('click', () => {
       bodyColor.style.backgroundColor = getRandomHexColor();
     }, 1000))) {
     buttonStart.disabled = true;
+    buttonStop.disabled = false;
   }
 });
 
 buttonStop.addEventListener('click', () => {
   buttonStart.disabled = false;
+  buttonStop.disabled = true;
   clearInterval(timerId)
 });
